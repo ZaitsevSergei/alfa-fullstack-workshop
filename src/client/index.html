@@ -1,34 +1,33 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <link src="./styles/site.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="./styles/site.css">
 </head>
 <body>
-<div id="container">
+<div class="container">
     <!--блок с навигацией-->
-    <header id="header">
+    <div class="navigation">
         <div>Карты</div>
         <div>Переводы</div>
-    </header>
+    </div>
     
     <!--блок с профилем-->
-    <div id="profile">
-        <div id="userName">Tomer Savoya</div>
-        <div id="profileAvatar">
+    <div class="profile">
+        <div class="userName">Tomer Savoya</div>
+        <div class="profileAvatar">
             <img src="./images/avatar.jpg"/ id="avatar">
         </div>
     </div>
     <!--Инфо о картах-->
-    <div id="cardsInfo">
+    <div class="cardsInfo">
         <!--Заголовок-->
-        <div id="cardsHeaderContainer">
-                <header id="cardsHeader">Мои карты</header>
-                <img src="./images/addButton.png" id="addCardImage" alt="Привязать карту"/>
-                <span id="addCardSpan">Привязать карту</span>
+        <div class="cardsHeaderContainer">
+                <header class="cardsHeader">Мои карты</header>                
+				<img src="./images/addButton.png" class="addCardImage" alt="Привязать карту" title="Привязать карту"/>							
         </div>
         
         <!--Блок с картами-->
@@ -46,7 +45,7 @@
                     <span class="balanceTitle">Остаток</span>
                     <div class="balanceValueBlock">
                         <span class="balanceValue">32 000</span>
-                        <span class="balanceCurrency">&#8381;</span>
+                        <span class="balanceCurrency"></span>
                     </div>                    
                 </div>
             </card>
