@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link src="./styles/site.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+    <!--блок с навигацией-->
+    <header id="header">
+        <div>Карты</div>
+        <div>Переводы</div>
+    </header>
+    
+    <!--блок с профилем-->
+    <div id="profile">
+        <div id="userName">Tomer Savoya</div>
+        <div id="profileAvatar">
+            <img src="./images/avatar.jpg"/ id="avatar">
+        </div>
+    </div>
+    <!--Инфо о картах-->
+    <div id="cardsInfo">
+        <!--Заголовок-->
+        <div id="cardsHeaderContainer">
+                <header id="cardsHeader">Мои карты</header>
+                <img src="./images/addButton.png" id="addCardImage" alt="Привязать карту"/>
+                <span id="addCardSpan">Привязать карту</span>
+        </div>
+        
+        <!--Блок с картами-->
+        <cards id="cards">
+            <!--first card-->
+            <card class="card">
+                <div class="cardBaseInfo">
+                    <img src="./images/cardStatuses/active.png" class="cardStatus">
+                    <img src="./images/cardPaymentSystems/visa.png" class="cardPaymentSystem">
+                    <span class="cardType">Дебетовая карта</span>
+                    <span class="cardTitle">Зарплатная карта</span>
+                </div>
+                <!--Остаток по карте-->
+                <div>
+                    <span class="balanceTitle">Остаток</span>
+                    <div class="balanceValueBlock">
+                        <span class="balanceValue">32 000</span>
+                        <span class="balanceCurrency">&#8381;</span>
+                    </div>                    
+                </div>
+            </card>
+
+            <!--second card-->
+            <card class="card">
+                <div class="cardBaseInfo">
+                    <img src="./images/cardStatuses/active.png" class="cardStatus">
+                    <img src="./images/cardPaymentSystems/masterCard.png" class="cardPaymentSystem">
+                    <span class="cardType">Кредитная карта</span>
+                    <span class="cardTitle">На BMW</span>
+                </div>
+                <!--Остаток по карте-->
+                <div>
+                    <span class="balanceTitle">Остаток</span>
+                    <div class="balanceValueBlock">
+                        <span class="balanceValue">1 500 000</span>
+                        <span class="balanceCurrency">&#8381;</span>
+                    </div>                    
+                </div>
+            </card>
+
+            <!--third card-->
+            <card class="card">
+                    <div class="cardBaseInfo">
+                        <img src="./images/cardStatuses/blocked.png" class="cardStatus">
+                        <img src="./images/cardPaymentSystems/maestro.png" class="cardPaymentSystem">
+                        <span class="cardType">Дебетовая карта</span>
+                        <span class="cardTitle">За бугор</span>
+                    </div>
+                    <!--Остаток по карте-->
+                    <div>
+                        <span class="balanceTitle">Остаток</span>
+                        <div class="balanceValueBlock">
+                            <span class="balanceValue">2 500</span>
+                            <span class="balanceCurrency">&euro;</span>
+                        </div>                    
+                    </div>
+                </card>
+                
+        </cards>
+    </div>
+</div>    
+</body>
+</html>
