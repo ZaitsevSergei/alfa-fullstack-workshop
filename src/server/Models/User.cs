@@ -13,6 +13,7 @@ namespace Server.Models
             // TODO return own Exception class
             if (string.IsNullOrEmpty(userName)) throw new UserDataException("username is null or empty", userName);
 
+            UserId = userId;
             UserName = userName;
         }
 
@@ -29,7 +30,7 @@ namespace Server.Models
         /// <summary>
         /// Path to user avatar picture
         /// </summary>
-        public string UserAvatar { get; set; } 
+        public string UserAvatar { get; set; }
 
         /// <summary>
         /// Getter user card list
