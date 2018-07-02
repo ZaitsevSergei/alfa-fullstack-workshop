@@ -7,5 +7,12 @@ namespace Server.Exceptions
     /// </summary>
     public class UserDataException : ArgumentException
     {
+        public string IncorrectInputData { get; }
+
+        public UserDataException(string message, string inputData)
+            : base($"{message}. {inputData} is incorrect")
+        {
+            IncorrectInputData = inputData;
+        }
     }
 }

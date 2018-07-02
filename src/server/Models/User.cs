@@ -1,3 +1,4 @@
+using Server.Exceptions;
 using System;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace Server.Models
         public User(string userName)
         {
             // TODO return own Exception class
-            if (string.IsNullOrEmpty(userName)) throw new Exception("username is null or empty");
+            if (string.IsNullOrEmpty(userName)) throw new UserDataException("username is null or empty", userName);
 
             UserName = userName;
         }
