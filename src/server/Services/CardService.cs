@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Server.Infrastructure;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -85,6 +86,27 @@ namespace Server.Services
             if (!CheckCardNumber(number)) return false;
 
             return Constants.AlfaBINs.Any(x => number.StartsWith(x));
+        }
+
+        /// <summary>
+        /// Check card activity by expiration date
+        /// </summary>
+        /// <param name="card">card to validate</param>
+        /// <returns></returns>
+        public bool ValidateCardActivity(Card card)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Check card able to do withdraw
+        /// </summary>
+        /// <param name="card">card to check</param>
+        /// <param name="withdraw">money to withdraw</param>
+        /// <returns></returns>
+        public bool ValidateCardBalance(Card card, Money withdraw)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -1,3 +1,6 @@
+using Server.Infrastructure;
+using Server.Models;
+
 namespace Server.Services
 {
     /// <summary>
@@ -25,5 +28,23 @@ namespace Server.Services
         /// <param name="number">card number in any format</param>
         /// <returns>Return 0 is card is invalid, 1 if card is mastercard, 2 is visa, 3 is maestro, 4 is visa electon</returns>
         int CardTypeExtract(string number);
+
+        /// <summary>
+        /// Check card activity by expiration date
+        /// </summary>
+        /// <param name="card">card to validate</param>
+        /// <returns></returns>
+        bool ValidateCardActivity(Card card);
+
+        /// <summary>
+        /// Check card able to do withdraw
+        /// </summary>
+        /// <param name="card">card to check</param>
+        /// <param name="withdraw">money to withdraw</param>
+        /// <returns></returns>
+        bool ValidateCardBalance(Card card, Money withdraw);
+
+
+
     }
 }
