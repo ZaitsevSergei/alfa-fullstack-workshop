@@ -5,6 +5,6 @@
     /// </summary>
     public enum CurrencyType
     {
-        Ruble = 1, Dollar, Euro
+        RUB = 1, USD, EUR
     }
 }
