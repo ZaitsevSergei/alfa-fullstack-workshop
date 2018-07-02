@@ -11,7 +11,17 @@ namespace Server.Models
     public class Card
     {
         private readonly ICardService cardService = new CardService();
+        
 
+#if DEBUG
+        public Card() { }
+
+        public Card(string cardNumber, Money cardBalance)
+        {
+            CardNumber = cardNumber;
+            CardBalance = cardBalance;
+        }
+#endif
         public Card(int cardId, string cardNumber, string cardName, Money cardBalance,
             DateTime expirityDate, CardUseType cardUseType, CardType cardPaymentSystemType, User user)
         {
