@@ -13,7 +13,12 @@ namespace Server.Models
         /// <summary>
         /// Date of transaction
         /// </summary>
-        public DateTime TransactionDate { get; private set; }       
+        public DateTime TransactionDate { get; private set; }
+
+        /// <summary>
+        /// Money transfer
+        /// </summary>
+        public Money TransactionMoney { get; }
 
         /// <summary>
         /// Value of transaction
@@ -35,13 +40,11 @@ namespace Server.Models
         /// </summary>
         public Card WriteOnCard { get; set; }
 
-        public Transaction(int transactionId, DateTime transactionDate, decimal transactionValue,
-            CurrencyType transactionCurrency, Card writeOffCard, Card writeOnCard)
+        public Transaction(int transactionId, DateTime transactionDate, Money transactionMoney, Card writeOffCard, Card writeOnCard)
         {
             TransactionId = transactionId;
             TransactionDate = transactionDate;
-            TransactionValue = transactionValue;
-            TransactionCurrency = transactionCurrency;
+            TransactionMoney = transactionMoney;
             WriteOffCard = writeOffCard;
             WriteOnCard = writeOnCard;
         }

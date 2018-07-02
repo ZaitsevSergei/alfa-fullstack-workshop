@@ -1,4 +1,5 @@
 ﻿using Server.Infrastructure;
+using Server.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Server.Services
         /// Award 10 bonus rubles to card
         /// </summary>
         /// <param name="card">card to award</param>
-        void AwardBonus(CardService card);
+        void AwardBonus(Card card);
 
         /// <summary>
         /// Currency exchange method
