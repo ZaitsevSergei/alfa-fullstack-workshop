@@ -2,6 +2,6 @@
 {
     public enum CurrencyType
     {
-        Rubble, Dollar, Euro
+        Rubble = 1, Dollar, Euro
     }
 }
