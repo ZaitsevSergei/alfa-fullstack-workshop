@@ -1,5 +1,4 @@
 using Server.Exceptions;
-using System;
 using System.Collections.Generic;
 
 namespace Server.Models
@@ -16,10 +15,21 @@ namespace Server.Models
 
             UserName = userName;
         }
+
+        /// <summary>
+        /// User id in database
+        /// </summary>
+        public int UserId { get; private set; }
+
         /// <summary>
         /// Getter and setter username of the user for login
         /// </summary>
         public string UserName { get; private set; }
+
+        /// <summary>
+        /// Path to user avatar picture
+        /// </summary>
+        public string UserAvatar { get; set; } 
 
         /// <summary>
         /// Getter user card list
@@ -31,7 +41,5 @@ namespace Server.Models
         /// </summary>
         /// <param name="shortCardName"></param>
         public Card AddOpenNewCard(string shortCardName) => throw new System.NotImplementedException();
-
-        // TODO add fields
     }
 }
