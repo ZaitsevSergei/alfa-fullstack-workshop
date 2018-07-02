@@ -12,11 +12,18 @@ namespace Server.Models
     {
         private readonly ICardService cardService = new CardService();
 
-        public Card(string cardNumber, string cardName)
+        public Card(int cardId, string cardNumber, string cardName, decimal cardBalance,
+            DateTime expirityDate, CardUseType cardUseType, CardType cardPaymentSystemType, User user)
         {
             //TODO validation
+            CardId = cardId;
             CardNumber = cardNumber;
             CardName = cardName;
+            CardBalance = cardBalance;
+            ExpirityDate = expirityDate;
+            CardUseType = cardUseType;
+            CardPaymentSystemType = cardPaymentSystemType;
+            User = user;
         }
 
         /// <summary>
@@ -30,6 +37,7 @@ namespace Server.Models
         /// </summary>
         /// <returns></returns>
         public string CardName { get; set; }
+        public decimal Balance { get; }
 
         /// <summary>
         /// Card id in database
@@ -64,8 +72,9 @@ namespace Server.Models
         public User User { get; private set; }
 
         /// <summary>
-        /// Transaction by this card
+        /// Transactions by this card
         /// </summary>
         public ICollection<Transaction> Transactions { get; set; }
+                
     }
 }
