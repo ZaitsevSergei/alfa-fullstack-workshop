@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Server.Infrastructure
 {
@@ -80,5 +81,17 @@ namespace Server.Infrastructure
                 "627119",
                 "676230"
         };
+
+        // exchange rate dictionary
+        public static Dictionary<string, decimal> ExchangeRate = new Dictionary<string, decimal>()
+        {
+            { "USDRUB", 63.13m },
+            { "USDEUR", 0.8m },
+            { "RUBUSD", 0.015m },
+            { "RUBEUR", 0.013m },
+            { "EURUSD", 1.16m},
+            { "EURRUB", 73.48m }
+        };
+
     }
 }
