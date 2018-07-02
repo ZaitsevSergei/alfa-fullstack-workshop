@@ -1,7 +1,10 @@
 ﻿namespace Server.Infrastructure
 {
+    /// <summary>
+    /// Currency types: ruble, dollar, euro
+    /// </summary>
     public enum CurrencyType
     {
-        Rubble = 1, Dollar, Euro
+        Ruble = 1, Dollar, Euro
     }
 }

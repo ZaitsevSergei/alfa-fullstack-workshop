@@ -12,7 +12,7 @@ namespace Server.Models
     {
         private readonly ICardService cardService = new CardService();
 
-        public Card(int cardId, string cardNumber, string cardName, decimal cardBalance,
+        public Card(int cardId, string cardNumber, string cardName, Money cardBalance,
             DateTime expirityDate, CardUseType cardUseType, CardType cardPaymentSystemType, User user)
         {
             //TODO validation
@@ -37,8 +37,7 @@ namespace Server.Models
         /// </summary>
         /// <returns></returns>
         public string CardName { get; set; }
-        public decimal Balance { get; }
-
+       
         /// <summary>
         /// Card id in database
         /// </summary>
@@ -49,7 +48,7 @@ namespace Server.Models
         /// <summary>
         /// Card balance
         /// </summary>
-        public decimal CardBalance { get; private set; }
+        public Money CardBalance { get; private set; }
 
         /// <summary>
         /// expirity date of card
