@@ -41,8 +41,8 @@ namespace Server.Services
         /// </summary>
         /// <param name="card">card to check</param>
         /// <param name="withdraw">money to withdraw</param>
-        /// <returns></returns>
-        bool ValidateCardBalance(Card card, Money withdraw);
+        /// <returns>withdraw in card currency</returns>
+        decimal ValidateCardBalance(Card card, Money withdraw);
 
 
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Server.Exceptions;
 using Server.Infrastructure;
 using Server.Models;
 
@@ -105,8 +106,8 @@ namespace Server.Services
         /// </summary>
         /// <param name="card">card to check</param>
         /// <param name="withdraw">money to withdraw</param>
-        /// <returns></returns>
-        public bool ValidateCardBalance(Card card, Money withdraw)
+        /// <returns>withdraw in card currency</returns>
+        public decimal ValidateCardBalance(Card card, Money withdraw)
         {
             decimal withdrawInCardCurrency = transactionService.CurrencyExchange(withdraw, card.CardBalance.CurrencyType);
             // check write off card balance
@@ -114,10 +115,10 @@ namespace Server.Services
             // check writeoff card withdraw ability
             if (writeOffBalance - withdrawInCardCurrency <= 0)
             {
-                throw new Exception();
+                throw new CardBalanceException(writeOffBalance, withdrawInCardCurrency);
             }
 
-            return true;
+            return withdrawInCardCurrency;
         }
 
         #endregion

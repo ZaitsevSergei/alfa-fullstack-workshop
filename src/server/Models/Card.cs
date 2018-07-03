@@ -1,3 +1,4 @@
+using Server.Exceptions;
 using Server.Infrastructure;
 using Server.Services;
 using System;
@@ -23,7 +24,7 @@ namespace Server.Models
         }
 #endif
         public Card(int cardId, string cardNumber, string cardName, Money cardBalance,
-            DateTime expirityDate, CardUseType cardUseType, CardType cardPaymentSystemType, User user)
+            DateTime expirityDate, CardUseType cardUseType, User user)
         {
             //TODO validation
             CardId = cardId;
@@ -32,8 +33,19 @@ namespace Server.Models
             CardBalance = cardBalance;
             ExpirityDate = expirityDate;
             CardUseType = cardUseType;
-            CardPaymentSystemType = cardPaymentSystemType;
+            CardPaymentSystemType = (CardType)cardService.CardTypeExtract(CardNumber);
             User = user;
+
+            // validate card
+            if (!cardService.CheckCardEmmiter(CardNumber))
+            {
+                throw new InvalidCardException(CardNumber);
+            }
+
+            if (!cardService.ValidateCardActivity(this))
+            {
+                throw new CardActitvityException(CardNumber, ExpirityDate);
+            }
         }
 
         /// <summary>

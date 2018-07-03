@@ -1,4 +1,5 @@
-﻿using Server.Infrastructure;
+﻿using Server.Exceptions;
+using Server.Infrastructure;
 using Server.Models;
 using System;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace Server.Services
         /// <returns></returns>
         public decimal CurrencyExchange(Money moneytoExchange, CurrencyType currencyTarget)
         {
+            if (moneytoExchange.MoneyValue <= 0) throw new MoneyNegativeValueException("Using negative or zero valuues of money is restricted");
+
             // find coefficient of exchange
             decimal coefficient;
 

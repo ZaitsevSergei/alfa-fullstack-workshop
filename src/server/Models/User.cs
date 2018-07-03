@@ -1,5 +1,8 @@
 using Server.Exceptions;
+using Server.Infrastructure;
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Server.Models
 {
@@ -11,7 +14,7 @@ namespace Server.Models
         public User(int userId, string userName)
         {
             // TODO return own Exception class
-            if (string.IsNullOrWhiteSpace(userName)) throw new UserDataException("username is null or empty", userName);
+            if (string.IsNullOrWhiteSpace(userName)) throw new UserDataException("username is null or empty", userName);            
 
             UserId = userId;
             UserName = userName;
@@ -41,6 +44,13 @@ namespace Server.Models
         /// Added new card to list
         /// </summary>
         /// <param name="shortCardName"></param>
-        public Card AddOpenNewCard(string shortCardName) => throw new System.NotImplementedException();
+        public Card AddOpenNewCard(string shortCardName)
+        {
+            Card card = new Card(2, "4083967629457310", shortCardName, new Money(300000, CurrencyType.USD),
+                new DateTime(2023, 04, 24), CardUseType.Debit, CardType.VISA, this);
+
+            Cards.Add(card);
+            return card;
+        }
     }
 }

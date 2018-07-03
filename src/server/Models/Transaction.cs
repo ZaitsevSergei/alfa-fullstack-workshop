@@ -1,4 +1,5 @@
-﻿using Server.Infrastructure;
+﻿using Server.Exceptions;
+using Server.Infrastructure;
 using Server.Services;
 using System;
 
@@ -6,7 +7,8 @@ namespace Server.Models
 {
     public class Transaction
     {
-        readonly ITransactionService service = new TransactionService();
+        readonly ITransactionService transactionService = new TransactionService();
+        readonly ICardService cardService = new CardService();
 
         /// <summary>
         /// Transaction id in database
@@ -47,18 +49,23 @@ namespace Server.Models
         /// </summary>
         public void Execute()
         {
-            // calculate withdraw and deposite value in card currencies
-            decimal withdraw = service.CurrencyExchange(TransactionMoney, WriteOffCard.CardBalance.CurrencyType);
-            decimal deposit = service.CurrencyExchange(TransactionMoney, WriteOnCard.CardBalance.CurrencyType);
-            
-            // check write off card balance
-            decimal writeOffBalance = WriteOffCard.CardBalance.MoneyValue;
-            // check writeoff card withdraw ability
-            if (writeOffBalance - withdraw <= 0)
+            // validate cards activity
+            if(!cardService.ValidateCardActivity(WriteOffCard))
             {
-                throw new Exception();
+                throw new CardActitvityException(WriteOffCard.CardNumber, WriteOffCard.ExpirityDate);
             }
+            if (!cardService.ValidateCardActivity(WriteOnCard))
+            {
+                throw new CardActitvityException(WriteOnCard.CardNumber, WriteOnCard.ExpirityDate);
+            }
+            
+            // Validate write off card balance
+            decimal withdraw = cardService.ValidateCardBalance(WriteOffCard, TransactionMoney);
 
+            // calculate deposit sum
+            decimal deposit = transactionService.CurrencyExchange(TransactionMoney, 
+                WriteOnCard.CardBalance.CurrencyType);
+                       
             // do transfer
             WriteOffCard.CardBalance.MoneyValue -= withdraw;
             WriteOnCard.CardBalance.MoneyValue += deposit;

@@ -1,4 +1,6 @@
-﻿namespace Server.Infrastructure
+﻿using Server.Exceptions;
+
+namespace Server.Infrastructure
 {
     /// <summary>
     /// Contains value and currency type
@@ -10,6 +12,11 @@
 
         public Money(decimal moneyValue, CurrencyType currencyType)
         {
+            if(moneyValue <= 0)
+            {
+                throw new InvalidMoneyValue(moneyValue);
+            }
+
             MoneyValue = moneyValue;
             CurrencyType = currencyType;
         }
