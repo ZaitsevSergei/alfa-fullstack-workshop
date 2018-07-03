@@ -1,8 +1,5 @@
 ﻿using Server.Infrastructure;
 using Server.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Server.Services
 {
@@ -21,6 +18,5 @@ namespace Server.Services
         /// <param name="currencyTarget">currnecy to exchange</param>
         /// <returns>money value in currencyTarget</returns>
         decimal CurrencyExchange(Money moneytoExchange, CurrencyType currencyTarget);
-
     }
 }

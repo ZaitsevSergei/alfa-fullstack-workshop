@@ -1,10 +1,13 @@
 ﻿using Server.Infrastructure;
+using Server.Services;
 using System;
 
 namespace Server.Models
 {
     public class Transaction
     {
+        readonly ITransactionService service = new TransactionService();
+
         /// <summary>
         /// Transaction id in database
         /// </summary>
@@ -39,15 +42,17 @@ namespace Server.Models
             WriteOnCard = writeOnCard;
         }
 
+        /// <summary>
+        /// Execute transaction
+        /// </summary>
         public void Execute()
         {
-            // init coefficients to write off and write on cards
-            decimal writeOffCoeficient = CalculateExchangeCoeffiecients(WriteOffCard.CardBalance.CurrencyType);
-            decimal writeOnCoeficient = CalculateExchangeCoeffiecients(WriteOnCard.CardBalance.CurrencyType); ;
-
+            // calculate withdraw and deposite value in card currencies
+            decimal withdraw = service.CurrencyExchange(TransactionMoney, WriteOffCard.CardBalance.CurrencyType);
+            decimal deposit = service.CurrencyExchange(TransactionMoney, WriteOnCard.CardBalance.CurrencyType);
+            
             // check write off card balance
             decimal writeOffBalance = WriteOffCard.CardBalance.MoneyValue;
-            decimal withdraw = TransactionMoney.MoneyValue * writeOffCoeficient;
             // check writeoff card withdraw ability
             if (writeOffBalance - withdraw <= 0)
             {
@@ -56,20 +61,7 @@ namespace Server.Models
 
             // do transfer
             WriteOffCard.CardBalance.MoneyValue -= withdraw;
-            WriteOnCard.CardBalance.MoneyValue += TransactionMoney.MoneyValue * writeOnCoeficient;
-        }
-
-        private decimal CalculateExchangeCoeffiecients(CurrencyType type)
-        {
-            if (TransactionMoney.CurrencyType == type)
-            {
-                return 1;
-            }
-            else
-            {
-                return Constants.ExchangeRate[TransactionMoney.CurrencyType.ToString("G") +
-                    type.ToString("G")];
-            }
-        }
+            WriteOnCard.CardBalance.MoneyValue += deposit;
+        }        
     }
 }

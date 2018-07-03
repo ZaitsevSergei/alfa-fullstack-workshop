@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Server.Infrastructure;
+﻿using Server.Infrastructure;
 using Server.Models;
+using System;
+using System.Linq;
 
 namespace Server.Services
 {
@@ -30,9 +30,30 @@ namespace Server.Services
             transaction.Execute();
         }
 
+        /// <summary>
+        /// Currency exchange service
+        /// </summary>
+        /// <param name="moneytoExchange">Money to exchange with value and currency type</param>
+        /// <param name="currencyTarget">Currency type which money shod be exchanged </param>
+        /// <returns></returns>
         public decimal CurrencyExchange(Money moneytoExchange, CurrencyType currencyTarget)
         {
-            throw new NotImplementedException();
+            // find coefficient of exchange
+            decimal coefficient;
+
+            // if money is the same currency as target
+            if (moneytoExchange.CurrencyType == currencyTarget)
+            {
+                return moneytoExchange.MoneyValue;
+            }
+            // else see currency exchange rate
+            else
+            {
+                coefficient = Constants.ExchangeRate[moneytoExchange.CurrencyType.ToString("G") +
+                    currencyTarget.ToString("G")];
+            }
+
+            return moneytoExchange.MoneyValue * coefficient;
         }
     }
 }
