@@ -21,16 +21,6 @@ namespace Server.Models
         public Money TransactionMoney { get; }
 
         /// <summary>
-        /// Value of transaction
-        /// </summary>
-        public decimal TransactionValue { get; private set; }
-
-        /// <summary>
-        /// Currency of transaction
-        /// </summary>
-        public CurrencyType TransactionCurrency { get; private set; }
-
-        /// <summary>
         /// Write off card
         /// </summary>
         public Card WriteOffCard { get; set; }
@@ -49,5 +39,40 @@ namespace Server.Models
             WriteOnCard = writeOnCard;
         }
 
+        public void Execute()
+        {
+            decimal writeOffCoeficient;
+            decimal writeOnCoeficient;
+
+            // check currency of cards 
+            if (WriteOffCard.CardBalance.CurrencyType == WriteOnCard.CardBalance.CurrencyType && 
+                WriteOffCard.CardBalance.CurrencyType == TransactionMoney.CurrencyType)
+            {
+                writeOffCoeficient = writeOnCoeficient = 1;
+            }
+            else
+            {
+                writeOffCoeficient = Constants.ExchangeRate[
+                    TransactionMoney.CurrencyType.ToString("G") +
+                        WriteOffCard.CardBalance.CurrencyType.ToString("G")];
+                writeOnCoeficient = Constants.ExchangeRate[
+                    TransactionMoney.CurrencyType.ToString("G") +
+                        WriteOnCard.CardBalance.CurrencyType.ToString("G")];
+            }
+
+            decimal writeOffBalance = WriteOffCard.CardBalance.MoneyValue;
+            decimal withdraw = TransactionMoney.MoneyValue * writeOffCoeficient;
+            // check writeoff card withdraw ability
+            if (writeOffBalance - withdraw <= 0)
+            {
+                throw new Exception();
+            }
+
+            // do transfer
+            WriteOffCard.CardBalance.MoneyValue -= withdraw;
+            WriteOnCard.CardBalance.MoneyValue += TransactionMoney.MoneyValue *
+                writeOnCoeficient;
+
+        }
     }
 }

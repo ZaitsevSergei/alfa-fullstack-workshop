@@ -1,9 +1,9 @@
 ﻿namespace Server.Infrastructure
 {
     /// <summary>
-    /// Conteins value and currency type
+    /// Contains value and currency type
     /// </summary>
-    public struct Money
+    public class Money
     {
         public decimal MoneyValue { get; set; }
         public CurrencyType CurrencyType { get; private set; }
