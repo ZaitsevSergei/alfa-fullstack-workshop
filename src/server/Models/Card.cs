@@ -79,7 +79,7 @@ namespace Server.Models
         /// Card holder
         /// </summary>
         public User User { get; private set; }
-
+               
         /// <summary>
         /// Transactions by this card
         /// </summary>

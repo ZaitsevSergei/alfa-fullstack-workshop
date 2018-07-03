@@ -12,6 +12,8 @@ namespace Server.Services
     /// </summary>
     public class CardService : ICardService
     {
+        readonly ITransactionService transactionService = new TransactionService();
+
         #region ICardService
         /// <summary>
         /// Check card number by Lun algoritm
@@ -95,7 +97,7 @@ namespace Server.Services
         /// <returns></returns>
         public bool ValidateCardActivity(Card card)
         {
-            throw new NotImplementedException();
+            return DateTime.Now < card.ExpirityDate;
         }
 
         /// <summary>
@@ -106,7 +108,16 @@ namespace Server.Services
         /// <returns></returns>
         public bool ValidateCardBalance(Card card, Money withdraw)
         {
-            throw new NotImplementedException();
+            decimal withdrawInCardCurrency = transactionService.CurrencyExchange(withdraw, card.CardBalance.CurrencyType);
+            // check write off card balance
+            decimal writeOffBalance = card.CardBalance.MoneyValue;
+            // check writeoff card withdraw ability
+            if (writeOffBalance - withdrawInCardCurrency <= 0)
+            {
+                throw new Exception();
+            }
+
+            return true;
         }
 
         #endregion

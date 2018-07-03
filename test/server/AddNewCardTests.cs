@@ -10,8 +10,7 @@ namespace ServerTest
 {
     public class AddNewCardTests
     {
-        private const decimal V = 0m;
-        ITransactionService TransactionService = new TransactionService();
+        readonly ITransactionService TransactionService = new TransactionService();
 
         #region Positive cases
         [Fact]
