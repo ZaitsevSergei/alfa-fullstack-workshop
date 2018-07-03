@@ -41,25 +41,11 @@ namespace Server.Models
 
         public void Execute()
         {
-            decimal writeOffCoeficient;
-            decimal writeOnCoeficient;
+            // init coefficients to write off and write on cards
+            decimal writeOffCoeficient = CalculateExchangeCoeffiecients(WriteOffCard.CardBalance.CurrencyType);
+            decimal writeOnCoeficient = CalculateExchangeCoeffiecients(WriteOnCard.CardBalance.CurrencyType); ;
 
-            // check currency of cards 
-            if (WriteOffCard.CardBalance.CurrencyType == WriteOnCard.CardBalance.CurrencyType && 
-                WriteOffCard.CardBalance.CurrencyType == TransactionMoney.CurrencyType)
-            {
-                writeOffCoeficient = writeOnCoeficient = 1;
-            }
-            else
-            {
-                writeOffCoeficient = Constants.ExchangeRate[
-                    TransactionMoney.CurrencyType.ToString("G") +
-                        WriteOffCard.CardBalance.CurrencyType.ToString("G")];
-                writeOnCoeficient = Constants.ExchangeRate[
-                    TransactionMoney.CurrencyType.ToString("G") +
-                        WriteOnCard.CardBalance.CurrencyType.ToString("G")];
-            }
-
+            // check write off card balance
             decimal writeOffBalance = WriteOffCard.CardBalance.MoneyValue;
             decimal withdraw = TransactionMoney.MoneyValue * writeOffCoeficient;
             // check writeoff card withdraw ability
@@ -70,9 +56,20 @@ namespace Server.Models
 
             // do transfer
             WriteOffCard.CardBalance.MoneyValue -= withdraw;
-            WriteOnCard.CardBalance.MoneyValue += TransactionMoney.MoneyValue *
-                writeOnCoeficient;
+            WriteOnCard.CardBalance.MoneyValue += TransactionMoney.MoneyValue * writeOnCoeficient;
+        }
 
+        private decimal CalculateExchangeCoeffiecients(CurrencyType type)
+        {
+            if (TransactionMoney.CurrencyType == type)
+            {
+                return 1;
+            }
+            else
+            {
+                return Constants.ExchangeRate[TransactionMoney.CurrencyType.ToString("G") +
+                    type.ToString("G")];
+            }
         }
     }
 }

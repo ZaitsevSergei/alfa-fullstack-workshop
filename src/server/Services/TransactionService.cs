@@ -27,7 +27,7 @@ namespace Server.Services
                 Repository.AlfaBank,
                 card
                 );
-            transaction.Execute()
+            transaction.Execute();
         }
 
         public decimal CurrencyExchange(Money moneytoExchange, CurrencyType currencyTarget)

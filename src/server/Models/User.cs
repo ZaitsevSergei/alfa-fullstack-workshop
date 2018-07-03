@@ -11,7 +11,7 @@ namespace Server.Models
         public User(int userId, string userName)
         {
             // TODO return own Exception class
-            if (string.IsNullOrEmpty(userName)) throw new UserDataException("username is null or empty", userName);
+            if (string.IsNullOrWhiteSpace(userName)) throw new UserDataException("username is null or empty", userName);
 
             UserId = userId;
             UserName = userName;
