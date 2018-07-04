@@ -13,28 +13,28 @@ namespace Server.Controllers
     [Route("api/[controller]")]
     public class CardsController : Controller
     {
-        private readonly IBankRepository _repository;
+        private readonly IBankRepository repository;
 
-        private readonly ICardService _cardService;
+        private readonly ICardService cardService;
 
         public CardsController(IBankRepository repository, ICardService cardService)
         {
-            _repository = repository;
-            _cardService = cardService;
+            this.repository = repository;
+            this.cardService = cardService;
         }
 
         // GET api/cards
         [HttpGet]
-        public IEnumerable<Card> Get() => _repository.GetCards();
+        public IEnumerable<Card> Get() => repository.GetCards();
 
         // GET api/cards/5334343434343...
         [HttpGet("{number}")]
         public Card Get(string number)
         {
-            if (!_cardService.CheckCardEmmiter(number))
+            if (!cardService.CheckCardEmmiter(number))
                 throw new UserDataException("Card number is invalid", number);
             //TODO validation
-            return _repository.GetCard(number);
+            return repository.GetCard(number);
         }
 
         // POST api/cards
