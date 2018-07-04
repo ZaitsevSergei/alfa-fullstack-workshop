@@ -10,9 +10,14 @@ namespace Server.Exceptions
         public string IncorrectInputData { get; }
 
         public UserDataException(string message, string inputData)
+<<<<<<< HEAD
             : base($"{message}. {inputData} is incorrect")
         {
             IncorrectInputData = inputData;
         }
+=======
+            : base($"{message}. {inputData} is incorrect.")
+            => IncorrectInputData = inputData;
+>>>>>>> 6987c9653a017e4c6fd5b786a07621fdf1b1d5c3
     }
 }

@@ -27,8 +27,13 @@ namespace Server.Models
         /// <param name="userName">Login of the user</param>
         public User(string userName)
         {
+<<<<<<< HEAD
+            // TODO return own Exception class
+            if (string.IsNullOrEmpty(userName)) throw new UserDataException("username is null or empty", userName);
+=======
             if (string.IsNullOrWhiteSpace(userName))
                 throw new UserDataException("username is null or empty", userName);
+>>>>>>> 6987c9653a017e4c6fd5b786a07621fdf1b1d5c3
 
             UserName = userName;
         }
