@@ -17,5 +17,10 @@ namespace Server.Data
 
             return user.Cards;
         }
+
+        //public static void GenerateFakeTransactions(Car)
+        //{
+
+        //}
     }
 }

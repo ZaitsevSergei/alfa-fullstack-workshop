@@ -81,8 +81,7 @@ namespace Server.Models
         /// Getter user card list
         /// </summary>
         public IList<Card> Cards => new ReadOnlyCollection<Card>(_cards);
-
-
+        
         /// <summary>
         /// Added new card to list
         /// </summary>

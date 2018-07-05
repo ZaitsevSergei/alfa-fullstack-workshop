@@ -21,10 +21,12 @@ namespace Server.Data
         Card GetCard(string cardNumber);
 
         /// <summary>
-        /// OpenNewCard
+        /// OpenNewCard 
         /// </summary>
+        /// <param name="currency">card currency</param>
         /// <param name="cardType">type of the cards</param>
-        void OpenNewCard(CardType cardType);
+        /// <param name="shortCardName">name of card</param>
+        void OpenNewCard(string shortCardName, Currency currency, CardType cardType);
 
         /// <summary>
         /// Transfer money

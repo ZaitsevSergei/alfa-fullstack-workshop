@@ -37,15 +37,24 @@ namespace Server.Models
             if (!cardService.CheckCardEmmiter(cardNumber))
                 throw new UserDataException("Wrong emitted cardNumber", cardNumber);
 
-            if (cardType == CardType.UNKNOWN)
-                throw new UserDataException("Wrong type card", cardType.ToString());
+            // check card name
+            if (string.IsNullOrWhiteSpace(cardName))
+            {
+                cardNumber = "Alfa bank card";
+            }
 
+            // check card type
+            if (cardType == CardType.UNKNOWN)
+                throw new UserDataException("Wrong type card", cardType.ToString("G"));
+
+            // card open date
             if (dtOpenCard == null)
                 dtOpenCard = DateTime.Today;
 
             else if (dtOpenCard > DateTime.Today)
                 new UserDataException("You can't open card in future", dtOpenCard.Value.ToString("yyyy-MM-dd"));
 
+            // check card validity
             if (validity <= 0 || validity > 5)
                 new UserDataException("Incorrect validaty. Must be [1-5] years", validity.ToString());
 
@@ -54,7 +63,6 @@ namespace Server.Models
             DTOpenCard = dtOpenCard.Value;
             Validity = validity;
             Currency = currency;
-            CardType = cardType;
         }
 
         /// <summary>
