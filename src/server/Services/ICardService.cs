@@ -36,9 +36,16 @@ namespace Server.Services
         string CreateNormalizeCardNumber(string cardNumber);
 
         /// <summary>
-        /// Converts int currency value to <see cref="CardType"/> if it's possible
+        /// Converts int cardType value to <see cref="CardType"/> if it's possible
         /// </summary>
-        /// <param name="currencyInput">integer </param>
+        /// <param name="cardType">card type integer value</param>
+        /// <returns></returns>
+        CardType ValidateCardType(int cardType);
+
+        /// <summary>
+        /// Converts int currency value to <see cref="Currency"/> if it's possible
+        /// </summary>
+        /// <param name="currencyInput">currency integer value</param>
         /// <returns></returns>
         Currency ValidateCurrency(int currencyInput);
     }

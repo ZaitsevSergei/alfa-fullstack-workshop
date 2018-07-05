@@ -122,6 +122,23 @@ namespace Server.Services
             }
         }
 
+
+        /// <summary>
+        /// Converts int cardType value to <see cref="CardType"/> if it's possible
+        /// </summary>
+        /// <param name="cardType">card type integer value</param>
+        /// <returns></returns>
+        public CardType ValidateCardType(int cardType)
+        {
+            try
+            {
+                return (CardType)cardType;
+            }
+            catch (InvalidCastException e)
+            {
+                throw new UserDataException("Card type is not maintable", currencyInput.ToString());
+            }
+        }
         #endregion
 
         #region Utils
@@ -143,6 +160,8 @@ namespace Server.Services
 
             return result;
         }
+
+        
 
         #endregion
     }

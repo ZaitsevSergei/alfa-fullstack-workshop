@@ -44,12 +44,15 @@ namespace Server.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CardIssueFormat card)
         {
-            
+            // check currency and cardType codes 
             Currency currency = cardService.ValidateCurrency(card.Currency);
+            CardType cardType = cardService.ValidateCardType(card.CardType);
 
-            repository.OpenNewCard(card.CardName, card.CardNumber, currency);
+            // open new card
+            repository.OpenNewCard(card.CardName, currency, cardType);
 
-            return Ok();
+            // return 200 and new card instance
+            return Ok(repository.GetCards().Last());
         }
 
         // DELETE api/cards/5
