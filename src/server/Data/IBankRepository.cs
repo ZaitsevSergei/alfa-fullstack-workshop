@@ -41,8 +41,7 @@ namespace Server.Data
         /// Get range of transactions
         /// </summary>
         /// <param name="cardnumber"></param>
-        /// <param name="from">from range</param>
-        /// <param name="to">to range</param>
+        /// <param name="from">from range</param>        
         IEnumerable<Transaction> GetTranasctions(string cardNumber, int from);
 
         /// <summary>

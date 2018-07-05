@@ -11,14 +11,12 @@ namespace Server.Models {
         public decimal Sum { get; set; }
         [Required]
         public string From { get; set; }
-        [Required]
-        public string To { get; set; }
-
-        public TransactionFormat(decimal sum, string from, string to)
+        
+        public TransactionFormat(decimal sum, string from)
         {
             Sum = sum;
             From = from;
-            To = to;
+            
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Server.Data
         private readonly User currentUser;
 
         ICardService cardService = new CardService();
+        IBusinessLogicService bService = BusinessLogicService();
 
         public InMemoryBankRepository()
         {
@@ -58,17 +59,15 @@ namespace Server.Data
         /// Get range of transactions
         /// </summary>
         /// <param name="cardnumber"></param>
-        /// <param name="from">from range</param>
-        /// <param name="to">to range</param>
-        public IEnumerable<Transaction> GetTranasctions(string cardnumber, int from, int to)
+        /// <param name="from">from range</param>        
+        public IEnumerable<Transaction> GetTranasctions(string cardnumber, int from)
         {
-
+            var card = GetCard(cardnumber);
+            if (from < 0)
+                throw new BusinessLogicException(TypeBusinessException.TRANSACTION, "From value must be greather than 0");
+            return card.Transactions.Skip(from).Take(10);
         }
-
-        public IEnumerable<Transaction> GetTranasctions(string cardNumber, int from)
-        {
-            throw new NotImplementedException();
-        }
+               
 
         /// <summary>
         /// OpenNewCard
@@ -86,6 +85,28 @@ namespace Server.Data
         /// <param name="from">card number</param>
         /// <param name="to">card number</param>
         public void TransferMoney(decimal sum, string from, string to)
-            => throw new NotImplementedException();
+        {
+            Card fromCard, toCard;
+            // find cards
+            if ((fromCard = currentUser.Cards.FirstOrDefault(x => x.CardNumber == cardService.
+                        CreateNormalizeCardNumber(from))) == null)
+            {
+                throw new BusinessLogicException(TypeBusinessException.CARD, "Card doesn't exists", from); 
+            }
+
+            if ((toCard = currentUser.Cards.FirstOrDefault(x => x.CardNumber == cardService.
+                        CreateNormalizeCardNumber(to))) == null)
+            {
+                throw new BusinessLogicException(TypeBusinessException.CARD, "Card doesn't exists", to);
+            }
+
+            if(bService.GetBalanceOfCard(fromCard) - sum < 0)
+            {
+                throw new BusinessLogicException(TypeBusinessException.TRANSACTION, $"Balance is less than sum of transfer", to);
+            }
+
+            fromCard.AddTransaction(new Transaction(sum, fromCard, toCard));
+            toCard.AddTransaction(new Transaction(sum, fromCard, toCard));
+        }
     }
 }

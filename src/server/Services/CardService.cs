@@ -95,6 +95,10 @@ namespace Server.Services
         /// <returns>Digits of a card number </returns>
         public string CreateNormalizeCardNumber(string cardNumber)
         {
+            if (string.IsNullOrWhiteSpace(cardNumber))
+            {
+                throw new UserDataException("cardNumber is invalid", cardNumber);
+            }
             var resultNumbers = new StringBuilder();
 
             foreach (var item in cardNumber)
