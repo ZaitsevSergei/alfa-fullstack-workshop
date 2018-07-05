@@ -44,6 +44,10 @@ namespace Server.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CardIssueFormat card)
         {
+            if (card == null || !ModelState.IsValid)
+            {
+                throw new UserDataException("Data for card issue is invalid", String.Empty);
+            }
             // check currency and cardType codes 
             Currency currency = cardService.ValidateCurrency(card.Currency);
             CardType cardType = cardService.ValidateCardType(card.CardType);
