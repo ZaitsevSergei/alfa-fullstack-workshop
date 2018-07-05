@@ -15,5 +15,12 @@ namespace Server.Models
 
         [Required]
         public int CardType { get; set; }
+
+        public CardIssueFormat(string cardName, int currency, int cardType)
+        {
+            CardName = cardName;
+            Currency = currency;
+            CardType = cardType;
+        }
     }
 }

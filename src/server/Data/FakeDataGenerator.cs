@@ -18,9 +18,9 @@ namespace Server.Data
             return user.Cards;
         }
 
-        public static void GenerateFakeTransactions(Car)
-        {
+        //public static void GenerateFakeTransactions(Car)
+        //{
 
-        }
+        //}
     }
 }

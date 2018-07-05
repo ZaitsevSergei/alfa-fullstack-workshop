@@ -36,8 +36,8 @@ namespace Server.Controllers
             // check card number
             if (!cardService.CheckCardEmmiter(number))
                 throw new UserDataException("Card number is invalid", number);
-            //TODO validation
-            return repository.GetCard(number);
+            
+            return repository.GetCard(cardService.CreateNormalizeCardNumber(number));
         }
 
         // POST api/cards
@@ -64,5 +64,7 @@ namespace Server.Controllers
         public IActionResult Delete(string number) => StatusCode(405);
 
         //TODO PUT method
+        [HttpPut("{number}")]
+        public IActionResult Put(string number) => StatusCode(405);
     }
 }

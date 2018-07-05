@@ -136,7 +136,7 @@ namespace Server.Services
             }
             catch (InvalidCastException e)
             {
-                throw new UserDataException("Card type is not maintable", currencyInput.ToString());
+                throw new UserDataException("Card type is not maintable", cardType.ToString());
             }
         }
         #endregion
