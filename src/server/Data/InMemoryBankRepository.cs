@@ -4,6 +4,7 @@ using System.Linq;
 using Server.Exceptions;
 using Server.Infrastructure;
 using Server.Models;
+using Server.Services;
 
 namespace Server.Data
 {
@@ -13,6 +14,8 @@ namespace Server.Data
     public class InMemoryBankRepository : IBankRepository
     {
         private readonly User currentUser;
+
+        ICardService cardService = new CardService();
 
         public InMemoryBankRepository()
         {
@@ -25,13 +28,26 @@ namespace Server.Data
         /// Get one card by number
         /// </summary>
         /// <param name="cardNumber">number of the cards</param>
-        public Card GetCard(string cardNumber) => throw new NotImplementedException();
+        public Card GetCard(string cardNumber)
+        {
+            try
+            {
+                return currentUser.Cards.First(x => x.CardNumber == cardService.CreateNormalizeCardNumber(cardNumber));
+            }
+            catch (Exception)
+            {
+
+                throw new BusinessLogicException(TypeBusinessException.CARD, "User hasn't card with this number", cardNumber);
+            }
+            
+        }
 
         /// <summary>
         /// Getter for cards
         /// </summary>
-        public IEnumerable<Card> GetCards() => GetCurrentUser().Cards;
-
+        public IEnumerable<Card> GetCards() {
+            return GetCurrentUser().Cards;
+        }
         /// <summary>
         /// Get current logged user
         /// </summary>
@@ -45,7 +61,14 @@ namespace Server.Data
         /// <param name="from">from range</param>
         /// <param name="to">to range</param>
         public IEnumerable<Transaction> GetTranasctions(string cardnumber, int from, int to)
-            => throw new NotImplementedException();
+        {
+
+        }
+
+        public IEnumerable<Transaction> GetTranasctions(string cardNumber, int from)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// OpenNewCard

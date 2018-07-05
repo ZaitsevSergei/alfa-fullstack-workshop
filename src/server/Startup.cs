@@ -22,6 +22,7 @@ namespace Server
         {
             services.AddSingleton<IBankRepository, InMemoryBankRepository>();
             services.AddTransient<ICardService, CardService>();
+            services.AddTransient<IBusinessLogicService, BusinessLogicService>();
             services.AddMvc();
         }
 

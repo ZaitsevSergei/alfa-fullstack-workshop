@@ -37,7 +37,7 @@ namespace Server.Controllers
             if (!cardService.CheckCardEmmiter(number))
                 throw new UserDataException("Card number is invalid", number);
             
-            return repository.GetCard(cardService.CreateNormalizeCardNumber(number));
+            return repository.GetCard(number);
         }
 
         // POST api/cards
