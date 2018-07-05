@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Exceptions;
+using Server.Infrastructure;
 using Server.Models;
 using Server.Services;
 
@@ -31,6 +33,7 @@ namespace Server.Controllers
         [HttpGet("{number}")]
         public Card Get(string number)
         {
+            // check card number
             if (!cardService.CheckCardEmmiter(number))
                 throw new UserDataException("Card number is invalid", number);
             //TODO validation
@@ -39,8 +42,15 @@ namespace Server.Controllers
 
         // POST api/cards
         [HttpPost]
-        public IActionResult Post([FromBody]string cardType)
-            => throw new NotImplementedException();
+        public IActionResult Post([FromBody] CardIssueFormat card)
+        {
+            
+            Currency currency = cardService.ValidateCurrency(card.Currency);
+
+            repository.OpenNewCard(card.CardName, card.CardNumber, currency);
+
+            return Ok();
+        }
 
         // DELETE api/cards/5
         [HttpDelete("{number}")]

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Server.Exceptions;
 using Server.Infrastructure;
 
 namespace Server.Services
@@ -100,6 +101,25 @@ namespace Server.Services
                 if (char.IsDigit(item)) resultNumbers.Append(item);
 
             return resultNumbers.ToString();
+        }
+
+
+        /// <summary>
+        /// Converts int currency value to <see cref="CardType"/> if it's possible
+        /// </summary>
+        /// <param name="currencyInput">integer </param>
+        /// <exception cref="UserDataException">Throws when unadble to convert to maintable currencies</exception>
+        /// <returns>currency in <see cref="Currency"/> type</returns>
+        public Currency ValidateCurrency(int currencyInput)
+        {
+            try
+            {
+                return (Currency) currencyInput;
+            }
+            catch (InvalidCastException e)
+            {
+                throw new UserDataException("Currency is not maintable", currencyInput.ToString());
+            }
         }
 
         #endregion

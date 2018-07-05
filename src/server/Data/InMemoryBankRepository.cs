@@ -51,7 +51,10 @@ namespace Server.Data
         /// OpenNewCard
         /// </summary>
         /// <param name="cardType">type of the cards</param>
-        public void OpenNewCard(CardType cardType) => throw new NotImplementedException();
+        public void OpenNewCard(string shortCardName, Currency currency, CardType cardType)
+        {
+            currentUser.OpenNewCard(shortCardName, currency, cardType);
+        }
 
         /// <summary>
         /// Transfer money
