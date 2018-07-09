@@ -9,7 +9,7 @@ namespace Server.Repository
 {
     public class TransactionRepository : IRepository<Transaction>
     {
-        private bool disposed = false;
+        private bool disposed;
         private SQLContext context;
 
         public TransactionRepository(SQLContext context)

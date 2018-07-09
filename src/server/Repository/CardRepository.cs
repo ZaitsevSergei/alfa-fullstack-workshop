@@ -10,7 +10,7 @@ namespace Server.Repository
     public class CardRepository : IRepository<Card>
     {
         private readonly SQLContext context;
-        private bool disposed = false;
+        private bool disposed;
 
 
         public CardRepository(SQLContext context)

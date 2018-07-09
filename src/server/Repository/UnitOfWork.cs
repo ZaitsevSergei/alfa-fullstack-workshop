@@ -12,7 +12,7 @@ namespace Server.Repository
         private SQLContext context = new SQLContext();
         private IRepository<Card> cardRepository;
         private IRepository<Transaction> transactionRepository;
-        private bool disposed = false;
+        private bool disposed;
         public IRepository<Card> CardRepository
         {
             get
