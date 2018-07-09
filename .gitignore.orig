@@ -4,7 +4,8 @@ bin
 log
 node_modules
 lcov.info
-database.db
+<<<<<<< HEAD
+#Ignore thumbnails created by Windows
 Thumbs.db
 #Ignore files built by Visual Studio
 *.obj
@@ -35,3 +36,6 @@ _ReSharper*/
 .vs/
 #Nuget packages folder
 packages/
+=======
+database.db
+>>>>>>> 016c4fa60f2f201a69d747c766956d5b1d7404fb
