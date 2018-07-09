@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Exceptions;
-using Server.Infrastructure;
 using Server.Models;
 using Server.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Controllers
 {
@@ -20,11 +18,15 @@ namespace Server.Controllers
 
         private readonly IBusinessLogicService _businessLogicServer;
 
-        public TransactionsController(IBankRepository repository, ICardService cardService, IBusinessLogicService businessLogicServer)
+        private readonly IMapper mapper;
+
+        public TransactionsController(IBankRepository repository, ICardService cardService,
+            IBusinessLogicService businessLogicServer, IMapper mapper)
         {
             _repository = repository;
             _cardService = cardService;
             _businessLogicServer = businessLogicServer;
+            this.mapper = mapper;
         }
 
         // GET api/transactions/5334343434343?skip=...

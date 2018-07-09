@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Exceptions;
@@ -21,11 +22,15 @@ namespace Server.Controllers
 
         private readonly IBusinessLogicService _businessLogicServer;
 
-        public CardsController(IBankRepository repository, ICardService cardService, IBusinessLogicService businessLogicServer)
+        private readonly IMapper mapper;
+
+        public CardsController(IBankRepository repository, ICardService cardService, 
+            IBusinessLogicService businessLogicServer, IMapper mapper)
         {
             _repository = repository;
             _cardService = cardService;
             _businessLogicServer = businessLogicServer;
+            this.mapper = mapper;
         }
 
         // GET api/cards

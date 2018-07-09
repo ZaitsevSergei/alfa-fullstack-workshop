@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Server.Core;
 using Server.Data;
 using Server.Middlewares;
 using Server.Services;
+using System.Linq;
+using AutoMapper;
 
 namespace Server
 {
@@ -35,6 +31,8 @@ namespace Server
             services.AddDbContext<SQLContext>(options =>
                             options.UseSqlite(Configuration.GetSection("connectionStrings").
                                 GetChildren().Where(x=>x.Key=="sqlite").FirstOrDefault().Value));
+
+            services.AddAutoMapper();
 
             services.AddMvc();
         }
