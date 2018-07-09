@@ -6,8 +6,8 @@ namespace Server.Core
 {
     public class SQLContext : DbContext
     {
-        public SQLContext(DbContextOptions<SQLContext> options)
-            : base(options)
+        public SQLContext()
+            : base()
         { }
 
         public DbSet<Card> Cards { get; set; }
