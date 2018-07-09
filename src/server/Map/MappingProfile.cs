@@ -2,7 +2,7 @@
 using Server.Models;
 using Server.ViewModels;
 
-namespace Server.ViewModel
+namespace Server.Map
 {
     /// <summary>
     /// Profile to map entities
