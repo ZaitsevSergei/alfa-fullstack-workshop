@@ -27,6 +27,13 @@ namespace Server.Repository
             throw new NotImplementedException();
         }
 
+
+        public dynamic GetByNumber(string cardNumber, int skip)
+        {
+            return context.Cards.FirstOrDefault(x => x.CardNumber == cardNumber).Transactions.Skip(skip).Take(10);
+            
+        }
+
         public void Create(Transaction item)
         {
             throw new NotImplementedException();

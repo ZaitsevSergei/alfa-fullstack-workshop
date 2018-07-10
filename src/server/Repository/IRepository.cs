@@ -9,6 +9,7 @@ namespace Server.Repository
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
+        dynamic GetByNumber(string cardNumber, int skip);
         void Create(T item);
         void Update(T item);
         void Delete(int id);

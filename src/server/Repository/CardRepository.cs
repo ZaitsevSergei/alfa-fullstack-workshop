@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Server.Core;
 using Server.Models;
@@ -20,27 +21,40 @@ namespace Server.Repository
 
         public IEnumerable<Card> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Cards.ToList();
         }
 
         public Card GetById(int id)
         {
-            throw new NotImplementedException();
+            return context.Cards.FirstOrDefault(x => x.Id == id);
+        }
+
+        /// <summary>
+        /// Get one card by cardNumber. Must be with populating balance
+        /// </summary>
+        /// <param name="cardNumber">cardNumber of the cards</param>
+        /// <returns><see cref="Card"/> instance</returns>
+        public dynamic GetByNumber(string cardNumber, int skip)
+        {
+            return context.CurrentUser.Cards.FirstOrDefault(x => x.CardNumber == cardNumber);
         }
 
         public void Create(Card item)
         {
-            throw new NotImplementedException();
+            context.Cards.Add(item);
+            context.SaveChanges();
         }
 
         public void Update(Card item)
         {
-            throw new NotImplementedException();
+            Card card = GetByNumber(item.CardNumber);
+            card = item;
+            context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            context.CurrentUser.Cards.Remove(GetById(id));
         }
         
 
