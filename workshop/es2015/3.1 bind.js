@@ -11,5 +11,15 @@ var user = {
   }
 };
 
+function (context) {
+  return function () {
+    this.call(context);
+  }
+}
+
+var myBind = (context) => _ => this.call(funct);
+user.sayHi.myBind = f;
+
+
 // TODO
-setTimeout(f, 1000);
+setTimeout(user.sayHi.myBind(user), 1000);
