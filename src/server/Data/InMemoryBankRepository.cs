@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Server.Exceptions;
 using Server.Infrastructure;
 using Server.Models;
 using Server.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace Server.Data
 {
