@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Server.Repository
 {
-    public interface IRepository<T> : IDisposable
+    public interface IRepository<TEntity> where TEntity : class
     {
-        IEnumerable<T> GetAll();
-        T GetById(int id);
-        dynamic GetByNumber(string cardNumber, int skip);
-        void Create(T item);
-        void Update(T item);
+        TEntity Get(int id);
+        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> GetWithInclude(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeObjects);
+        void Add(TEntity entity);
+        void Update(TEntity entity);
         void Delete(int id);
+        void Save();
     }
 }
