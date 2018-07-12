@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Exceptions;
 using Server.Infrastructure;
-using Server.Models;
 using Server.Services;
 using Server.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using Server.Models;
 
 namespace Server.Controllers
 {
@@ -38,15 +36,7 @@ namespace Server.Controllers
         public IEnumerable<CardDto> Get()
         {
             var cards = _repository.GetCards();
-            return cards.Select(card => new CardDto
-            {
-                Number = card.CardNumber,
-                Type = (int)card.CardType,
-                Name = card.CardName,
-                Currency = (int)card.Currency,
-                Exp = _cardService.GetExpDateFromDateTime(card.DTOpenCard, card.ValidityYear),
-                Balance = _businessLogicServer.GetRoundBalanceOfCard(card)
-            });
+            return mapper.Map<IEnumerable<Card>, IEnumerable<CardDto>>(cards);
         }
 
         // GET api/cards/5334343434343...
@@ -58,15 +48,7 @@ namespace Server.Controllers
 
             var card = _repository.GetCard(number);
 
-            return new CardDto
-            {
-                Number = card.CardNumber,
-                Type = (int)card.CardType,
-                Name = card.CardName,
-                Currency = (int)card.Currency,
-                Exp = _cardService.GetExpDateFromDateTime(card.DTOpenCard, card.ValidityYear),
-                Balance = _businessLogicServer.GetRoundBalanceOfCard(card)
-            };
+            return mapper.Map<Card, CardDto>(card);
         }
 
         // POST api/cards
@@ -82,15 +64,7 @@ namespace Server.Controllers
 
             var card = _repository.OpenNewCard(value.Name, (Currency)value.Currency, (CardType)value.Type);
 
-            return Created($"/api/cards/{card.CardNumber}", new CardDto
-            {
-                Number = card.CardNumber,
-                Type = (int)card.CardType,
-                Name = card.CardName,
-                Currency = (int)card.Currency,
-                Exp = _cardService.GetExpDateFromDateTime(card.DTOpenCard, card.ValidityYear),
-                Balance = _businessLogicServer.GetRoundBalanceOfCard(card)
-            });
+            return Created($"/api/cards/{card.CardNumber}", mapper.Map<Card, CardDto>(card));
         }
 
         // DELETE api/cards

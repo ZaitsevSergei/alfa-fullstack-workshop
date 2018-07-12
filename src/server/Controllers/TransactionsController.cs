@@ -18,7 +18,7 @@ namespace Server.Controllers
 
         private readonly IBusinessLogicService _businessLogicServer;
 
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
         public TransactionsController(IBankRepository repository, ICardService cardService,
             IBusinessLogicService businessLogicServer, IMapper mapper)
@@ -26,7 +26,7 @@ namespace Server.Controllers
             _repository = repository;
             _cardService = cardService;
             _businessLogicServer = businessLogicServer;
-            this.mapper = mapper;
+            _mapper = mapper;
         }
 
         // GET api/transactions/5334343434343?skip=...
@@ -41,14 +41,10 @@ namespace Server.Controllers
 
             var transactions = _repository.GetTranasctions(number, skip, 10);
 
-            return transactions.Select(transaction => new TransactionDto
-            {
-                DateTime = transaction.DateTime,
-                From = transaction.CardFromNumber,
-                To = transaction.CardToNumber,
-                Sum = transaction.Sum,
-                Credit = transaction.CardToNumber == _cardService.CreateNormalizeCardNumber(number)
-            });
+            return _mapper.Map<IEnumerable<Transaction>, IEnumerable<TransactionDto>>(
+                transactions,
+                opts => opts.Items["number"] = number
+                );
         }
 
         // POST api/transactions
@@ -61,14 +57,12 @@ namespace Server.Controllers
 
             var transaction = _repository.TransferMoney(value.Sum, value.From, value.To);
 
-            return Created($"/transactions/{_cardService.CreateNormalizeCardNumber(value.From)}", new TransactionDto
-            {
-                DateTime = transaction.DateTime,
-                From = transaction.CardFromNumber,
-                To = transaction.CardToNumber,
-                Sum = transaction.Sum,
-                Credit = transaction.CardToNumber == _cardService.CreateNormalizeCardNumber(value.From)
-            });
+            return Created($"/transactions/{_cardService.CreateNormalizeCardNumber(value.From)}", 
+                _mapper.Map<Transaction, TransactionDto>(
+                    transaction,
+                    opts => opts.Items["number"] = value.From
+                    )
+                );
         }
 
         // DELETE api/transactions
