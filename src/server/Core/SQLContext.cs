@@ -1,6 +1,5 @@
-
-using Server.Models;
 using Microsoft.EntityFrameworkCore;
+using Server.Models;
 
 namespace Server.Core
 {
@@ -12,5 +11,6 @@ namespace Server.Core
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+
     }
 }

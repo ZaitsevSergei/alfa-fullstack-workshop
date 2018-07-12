@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Server.Exceptions;
 using Server.Infrastructure;
@@ -25,9 +24,9 @@ namespace Server.Models
         /// Card number
         /// </summary>
         /// <returns><see langword="string"/> card number representation</returns>
+        [Required]
         [MinLength(12)]
         [MaxLength(19)]
-        [Required]
         public string CardNumber { get; set; }
 
         /// <summary>

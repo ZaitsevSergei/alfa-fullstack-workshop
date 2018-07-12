@@ -1,8 +1,6 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Server.Exceptions;
-using Server.Infrastructure;
-using Server.Services;
 
 namespace Server.Models
 {
@@ -33,6 +31,7 @@ namespace Server.Models
         /// Link to valid card
         /// </summary>
         /// <returns><see cref="Card"/></returns>
+        [Required]
         public string CardFromNumber { get; set; }
 
         /// <summary>

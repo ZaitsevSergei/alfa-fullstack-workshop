@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Server.Exceptions;
-using Server.Infrastructure;
-using Server.Services;
-
 namespace Server.ViewModels
 {
     /// <summary>

@@ -39,16 +39,13 @@ namespace Server.Services
         /// Add bonus o new card
         /// </summary>
         /// <param name="card">Card to</param>
-        public Transaction AddBonusOnOpen(Card card)
+        public void AddBonusOnOpen(Card card)
         {
-            var transaction = new Transaction
+            card.Transactions.Add(new Transaction
             {
-                Card = card,
                 CardToNumber = card.CardNumber,
                 Sum = GetConvertSum(10M, Currency.RUR, card.Currency)
-            };
-            card.Transactions.Add(transaction);
-            return transaction;
+            });
         }
 
         /// <summary>
@@ -56,7 +53,10 @@ namespace Server.Services
         /// </summary>
         /// <param name="card">Card for cheking</param>
         /// <returns><see langword="true"/> if card is active</returns>
-        public bool CheckCardActivity(Card card) => !(card.DTOpenCard.AddYears(card.ValidityYear) <= DateTime.Today);
+        public bool CheckCardActivity(Card card)
+        {
+            return !(card.DTOpenCard.AddYears(card.ValidityYear) <= DateTime.Today);
+        }
 
         /// <summary>
         /// Get balance of the card
@@ -216,6 +216,18 @@ namespace Server.Services
         {
             if (cards.Any(c => c.CardName == shortCardName || c.CardNumber == cardNumber))
                 throw new UserDataException("Card is already exist", shortCardName);
+        }
+
+        Transaction IBusinessLogicService.AddBonusOnOpen(Card card)
+        {
+            var transaction = new Transaction
+            {
+                Card = card,
+                CardToNumber = card.CardNumber,
+                Sum = GetConvertSum(10M, Currency.RUR, card.Currency)
+            };
+            card.Transactions.Add(transaction);
+            return transaction;
         }
     }
 }

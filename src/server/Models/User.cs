@@ -1,13 +1,8 @@
 using Server.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net.Mail;
-using Server.Exceptions;
-using Server.Infrastructure;
-using Server.Services;
 
 namespace Server.Models
 {
@@ -75,6 +70,7 @@ namespace Server.Models
         /// Getter and setter Middlename of the user
         /// </summary>
         /// <returns><see langword="string"/></returns>
+        [MinLength(1)]
         public string Middlename { get; set; }
 
         /// <summary>
