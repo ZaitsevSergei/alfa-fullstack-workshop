@@ -1,7 +1,6 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
-using Server.Exceptions;
-using Server.Infrastructure;
-using Server.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace Server.Models
 {
@@ -13,6 +12,7 @@ namespace Server.Models
         /// <summary>
         /// Identificator
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -24,18 +24,28 @@ namespace Server.Models
         /// Sum in transaction
         /// </summary>
         /// <returns><see langword="decimal"/>representation of the sum transaction</returns>
+        [Required]
         public decimal Sum { get; set; }
 
         /// <summary>
         /// Link to valid card
         /// </summary>
         /// <returns><see cref="Card"/></returns>
+        [Required]
         public string CardFromNumber { get; set; }
 
         /// <summary>
         /// Link to valid card
         /// </summary>
         /// <returns><see cref="Card"/></returns>
+        [Required]
         public string CardToNumber { get; set; }
+
+        /// <summary>
+        /// Link to card
+        /// </summary>
+        /// <value></value>
+        [Required]
+        public Card Card { get; set; }
     }
 }

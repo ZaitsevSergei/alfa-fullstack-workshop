@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Server.Exceptions;
 using Server.Infrastructure;
@@ -16,28 +17,35 @@ namespace Server.Models
         /// <summary>
         /// Identificator
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
         /// Card number
         /// </summary>
         /// <returns><see langword="string"/> card number representation</returns>
+        [Required]
+        [MinLength(12)]
+        [MaxLength(19)]
         public string CardNumber { get; set; }
 
         /// <summary>
         /// Short name of the cards
         /// </summary>
         /// <returns><see langword="string"/> short card name representation</returns>
+        [MinLength(3)]
         public string CardName { get; set; }
 
         /// <summary>
         /// Card <see cref="Currency"/>
         /// </summary>
+        [Required]
         public Currency Currency { get; set; }
 
         /// <summary>
         /// Card <see cref="CardType"/>
         /// </summary>
+        [Required]
         public CardType CardType { get; set; }
 
         /// <summary>
