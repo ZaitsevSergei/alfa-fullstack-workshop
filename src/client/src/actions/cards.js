@@ -10,7 +10,37 @@ const ROOT_URL = "/api";
  *
  */
 export const addCard = (currency, type, name) => {
-  // TODO
+  return async dispatch => {
+    try {
+      // set action card add started
+      dispatch({
+        type: action.CARDS_ADD_STARTED
+      });
+
+      // do a POST request to api
+      const response = await axios.post(`${ROOT_URL}/cards`, { name, currency, type });
+    
+      // set action succes
+      dispatch({
+        type: action.CARD_ADD_SUCCESS,
+        payload: response.data
+      });
+
+      dispatch(changeActiveCard(response.data.number));
+
+    } catch (error) {
+      // print error
+      console.log(error.response);
+
+      // set action card add failed
+      dispatch({
+        type: action.CARD_ADD_FAILED,
+        payload: err.response.data.message
+            ? err.response.data.message
+            : err.response.data
+      });      
+    }
+  }
 };
 
 /**
