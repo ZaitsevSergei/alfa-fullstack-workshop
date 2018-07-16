@@ -2,6 +2,7 @@ using Server.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mail;
 using Server.Exceptions;
@@ -15,6 +16,7 @@ namespace Server.Models
     /// </summary>
     public class User
     {
+        [Required]
         private MailAddress _mail;
 
         /// <summary>
@@ -32,6 +34,7 @@ namespace Server.Models
         /// <summary>
         /// Identificator
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -58,12 +61,14 @@ namespace Server.Models
         /// Getter and setter Surname of the user
         /// </summary>
         /// <returns><see langword="string"/></returns>
+        [MinLength(1)]
         public string Surname { get; set; }
 
         /// <summary>
         /// Getter and setter Firstname of the user
         /// </summary>
         /// <returns><see langword="string"/></returns>
+        [MinLength(1)]
         public string Firstname { get; set; }
 
         /// <summary>
