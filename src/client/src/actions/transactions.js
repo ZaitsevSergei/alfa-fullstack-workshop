@@ -9,7 +9,7 @@ const ROOT_URL = '/api';
 *
 * @returns
 */
-export const fetchTransactions = number => {
+export const fetchTransactions = (number, skip = 0) => {
     return async dispatch => {
         try {
             dispatch({
@@ -17,7 +17,7 @@ export const fetchTransactions = number => {
             });
 
             const response = await axios
-                .get(`${ROOT_URL}/transactions/${number}`);
+                .get(`${ROOT_URL}/transactions/${number}?skip=${skip}`);
 
             dispatch({
                 type: action.TRANS_FETCH_SUCCESS,
@@ -28,6 +28,7 @@ export const fetchTransactions = number => {
                 type: action.TRANS_FETCH_FAILED,
                 payload: err.response.data.message ? err.response.data.message : err.response.data
             });
+            
             console.log(err.response.data.message ? err.response.data.message : err.response.data);
         }
     }
