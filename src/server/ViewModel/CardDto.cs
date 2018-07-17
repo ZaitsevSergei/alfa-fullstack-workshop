@@ -35,6 +35,6 @@ namespace Server.ViewModels
         /// <summary>
         /// Get balance. Must be VIRTUAL
         /// </summary>
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
     }
 }

@@ -1,8 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
+using Server.Data;
 using Server.Exceptions;
 using Server.Infrastructure;
 using Server.Models;
@@ -11,23 +10,18 @@ using Server.Services;
 
 namespace Server.Data
 {
-    /// <summary>
-    /// Unit of work
-    /// </summary>
     public class BankRepository : IBankRepository
     {
-        // interfaces to work
-        private IRepository<Card> _cardRepository;
+        private ICardRepository _cardRepository;
         private IRepository<Transaction> _transactionRepository;
         private ICardService _cardService;
         private IBusinessLogicService _businessLogicService;
 
         private readonly User currentUser;
-
-        public BankRepository(IRepository<Card> cardRepository,
-            IRepository<Transaction> transactionRepository,
-            ICardService cardService,
-            IBusinessLogicService businessLogicService)
+        public BankRepository(ICardRepository cardRepository,
+                              IRepository<Transaction> transactionRepository,
+                              ICardService cardService,
+                              IBusinessLogicService businessLogicService)
         {
             _cardRepository = cardRepository;
             _transactionRepository = transactionRepository;
@@ -35,24 +29,32 @@ namespace Server.Data
             _businessLogicService = businessLogicService;
         }
 
-        public IEnumerable<Card> GetCards()
-        {
-            return _cardRepository.GetAll();
-        }
-
         public Card GetCard(string cardNumber)
         {
-            // get card with transactions
             var card = _cardRepository
-                .GetWithInclude(
-                    c => c.CardNumber == _cardService.CreateNormalizeCardNumber(cardNumber),
-                    c => c.Transactions)
-                .FirstOrDefault();
+                         .GetWithTransactions(
+                             c => c.CardNumber == _cardService.CreateNormalizeCardNumber(cardNumber))
+                         .FirstOrDefault();
 
             if (card == null)
                 throw new UserDataException("Card not found", cardNumber, HttpStatusCode.NotFound);
 
             return card;
+        }
+
+        public IEnumerable<Card> GetCards() => _cardRepository.GetAll();
+
+        public User GetCurrentUser()
+            => currentUser != null ? currentUser :
+                throw new BusinessLogicException(TypeBusinessException.USER, "User is null");
+
+        public IEnumerable<Transaction> GetTranasctions(string cardnumber, int skip, int take)
+        {
+            var card = GetCard(cardnumber);
+
+            var transactions = card.Transactions.OrderByDescending(x => x.DateTime).Skip(skip).Take(take);
+
+            return transactions != null ? transactions : new List<Transaction>();
         }
 
         public Card OpenNewCard(string shortCardName, Currency currency, CardType cardType)
@@ -85,7 +87,7 @@ namespace Server.Data
             return newCard;
         }
 
-        public Transaction TransferMoney(decimal sum, string @from, string to)
+        public Transaction TransferMoney(decimal sum, string from, string to)
         {
             var cardFrom = GetCard(from);
             var cardTo = GetCard(to);
@@ -114,21 +116,6 @@ namespace Server.Data
             _transactionRepository.Save();
 
             return fromTransaction;
-        }
-
-        public IEnumerable<Transaction> GetTranasctions(string cardnumber, int skip, int take)
-        {
-            var card = GetCard(cardnumber);
-
-            var transactions = card.Transactions.Skip(skip).Take(take);
-
-            return transactions != null ? transactions : new List<Transaction>();
-        }
-
-        public User GetCurrentUser()
-        {
-            return currentUser != null ? currentUser :
-                throw new BusinessLogicException(TypeBusinessException.USER, "User is null");
         }
     }
 }
