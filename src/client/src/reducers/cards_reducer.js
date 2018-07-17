@@ -33,19 +33,11 @@ export default (state = initialState, { type, payload }) => {
         isLoading: state.data.length === 0 ? true : false
       };
 
-    case actions.CARD_ADD_FAILED:
-      return {
-        ...state,
-        error: payload
-      };
-
-    case actions.CARDS_FETCH_SUCCESS:
-      return {
-        ...state,
-        data: payload,
-        error: null,
-        isLoading: false
-      };
+    case actions.CARD_FETCH_SUCCESS:
+    return {
+      ...state,
+      data: addOrUpdateObjectInArray(state.data, payload)
+    };
 
     case actions.CARDS_FETCH_FAILED:
       return {
@@ -58,19 +50,28 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         activeCardNumber: payload
+      };   
+
+      case actions.CARD_ADD_STARTED:
+      return {
+          ...state,
+          isLoading: state.data.length === 0 ? true : false
       };
 
-    case actions.CARD_FETCH_SUCCESS:
+    case actions.CARD_ADD_SUCCESS:
       return {
         ...state,
-        data: addOrUpdateObjectInArray(state.data, payload)
+        data: addOrUpdateObjectInArray(state.data, payload),
+        error: null,
+        isLoading: false
       };
 
-    case actions.CARD_FETCH_FAILED:
+    case actions.CARD_ADD_FAILED:
       return {
         ...state,
-        error: payload
+        isLoading: false
       };
+  
 
     default:
       return state;

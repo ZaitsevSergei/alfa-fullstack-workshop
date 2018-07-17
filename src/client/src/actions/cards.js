@@ -26,6 +26,7 @@ export const addCard = (currency, type, name) => {
         payload: response.data
       });
 
+      // change active card
       dispatch(changeActiveCard(response.data.number));
 
     } catch (error) {
