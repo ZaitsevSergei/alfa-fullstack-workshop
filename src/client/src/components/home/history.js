@@ -64,10 +64,11 @@ const HistoryItemTime = styled.div`
 `;
 
 const HistoryItemSum = styled.div`
+  font-weight: bold;
   width: 72px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: ${({ color }) => color};
+  color: ${({ credit }) => (credit ? "red" : "green")};
 `;
 
 const History = ({ transactions, activeCard, isLoading }) => {
@@ -116,7 +117,7 @@ const History = ({ transactions, activeCard, isLoading }) => {
           <HistoryItemIcon bankSmLogoUrl={activeCard.theme.bankSmLogoUrl} />
           <HistoryItemTitle>{item.title}</HistoryItemTitle>
           <HistoryItemTime>{item.hhmm}</HistoryItemTime>
-          <HistoryItemSum>
+          <HistoryItemSum credit={item.credit}>
             {`${Number(item.sum.toFixed(2))} ${activeCard.currencySign}`}
           </HistoryItemSum>
         </HistoryItem>
